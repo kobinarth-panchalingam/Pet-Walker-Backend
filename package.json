@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "build": "tsc",
+    "start": "npm run build && node ./dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "lint": "eslint **/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +16,18 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
     "graphql": "^16.8.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   }
 }

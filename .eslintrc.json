@@ -1,0 +1,56 @@
+{
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:import/errors"
+    ],
+    "rules": {
+        "import/prefer-default-export": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    [
+                        "parent",
+                        "sibling"
+                    ],
+                    "object",
+                    "type",
+                    "index"
+                ],
+                "newlines-between": "always",
+                "pathGroupsExcludedImportTypes": [
+                    "builtin"
+                ],
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                },
+                "pathGroups": [
+                    {
+                        "pattern": "@/**",
+                        "group": "internal",
+                        "position": "before"
+                    }
+                ]
+            }
+        ],
+        "env": {
+            "node": true,
+            "es6": true
+        }
+    }
+}
