@@ -13,6 +13,10 @@
     "esModuleInterop": true,
     "types": [
       "node"
-    ],
-  }
+    ]
+  },
+  "include": [
+    "src",
+    "index.ts"
+  ]
 }

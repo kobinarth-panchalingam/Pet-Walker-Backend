@@ -6,15 +6,10 @@
     ],
     "rules": {
         "import/prefer-default-export": "off",
+        "allowImportingTsExtensions": "on",
         "import/extensions": [
             "error",
-            "ignorePackages",
-            {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
-            }
+            "ignorePackages"
         ],
         "import/order": [
             "error",
@@ -47,10 +42,6 @@
                     }
                 ]
             }
-        ],
-        "env": {
-            "node": true,
-            "es6": true
-        }
+        ]
     }
 }
