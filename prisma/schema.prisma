@@ -1,0 +1,39 @@
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Book {
+    id     Int    @id @default(autoincrement())
+    title  String
+    author String
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    email     String   @unique
+    name      String?
+    role      Role     @default(USER)
+    posts     Post[]
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    published Boolean  @default(false)
+    title     String   @db.VarChar(255)
+    author    User?    @relation(fields: [authorId], references: [id])
+    authorId  Int?
+}
+
+enum Role {
+    USER
+    ADMIN
+}
