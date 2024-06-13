@@ -8,32 +8,39 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model Book {
-    id     Int    @id @default(autoincrement())
-    title  String
-    author String
-}
-
 model User {
     id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
     email     String   @unique
-    name      String?
-    role      Role     @default(USER)
-    posts     Post[]
+    password  String
+    firstName String
+    lastName  String?
+    address   String?
+    status    Status   @default(PENDING)
+    role      Role     @default(OWNER)
+    createdAt DateTime @default(now())
+    Pets      Pet[]
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    published Boolean  @default(false)
-    title     String   @db.VarChar(255)
-    author    User?    @relation(fields: [authorId], references: [id])
-    authorId  Int?
+model Pet {
+    id          Int       @id @default(autoincrement())
+    name        String
+    breed       String
+    dob         DateTime?
+    description String?
+    ownerId     Int
+    owner       User      @relation(fields: [ownerId], references: [id])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 }
 
 enum Role {
-    USER
     ADMIN
+    OWNER
+    WALKER
+}
+
+enum Status {
+    PENDING
+    APPROVED
+    REJECTED
 }

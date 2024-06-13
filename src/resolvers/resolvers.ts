@@ -1,8 +1,17 @@
 import { Resolvers } from "../generated/graphql.js";
-import { bookResolver } from "./bookResolver.js";
+import { userResolvers } from "./userResolver.js";
+import { petResolvers } from "./petResolver.js";
+import { dateResolver } from "./scalars/dateResolver.js";
 
 export const resolvers: Resolvers = {
   Query: {
-    books: bookResolver,
+    ...userResolvers.Query,
+    ...petResolvers.Query,
   },
+  Mutation: {
+    ...petResolvers.Mutation,
+  },
+  User: userResolvers.User,
+  Pet: petResolvers.Pet,
+  Date: dateResolver,
 };

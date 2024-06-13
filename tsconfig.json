@@ -17,6 +17,7 @@
   },
   "include": [
     "src",
-    "index.ts"
+    "index.ts",
+    "src/auth/auth.ts"
   ]
 }

@@ -18,23 +18,27 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.10.4",
-    "@prisma/client": "^5.13.0",
+    "@prisma/client": "^5.14.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6"
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/typescript": "4.0.6",
     "@graphql-codegen/typescript-resolvers": "4.0.6",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "prettier": "^3.2.5",
-    "prisma": "^5.13.0",
+    "prisma": "^5.14.0",
     "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   }
