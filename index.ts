@@ -59,7 +59,7 @@ app.use(
   })
 );
 
-await new Promise<void>((resolve) => httpServer.listen({ port: process.env.PORT }, resolve));
+await new Promise<void>((resolve) => httpServer.listen({ port: process.env.PORT || 4000 }, resolve));
 console.log(`🚀 Server ready at ${process.env.PORT}`);
 
-export default httpServer;
+export default server;
