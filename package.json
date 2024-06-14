@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "npm run build && node --env-file=.env dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "npm run codegen && tsx watch --env-file=.env index.ts",
     "lint": "eslint **/*.ts",
     "codegen": "graphql-codegen --config codegen.ts",
