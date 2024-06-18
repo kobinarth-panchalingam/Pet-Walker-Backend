@@ -32,6 +32,13 @@ interface LoginRequest extends Request {
 router.post("/register", async (req: RegisterRequest, res: Response) => {
   console.log(req.body);
   const { email, password, role, firstName, lastName } = req.body;
+
+  // Check if a user with the given email already exists
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) {
+    return res.status(400).json({ error: "A user with this email already exists" });
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({
     data: { email, password: hashedPassword, role, firstName, lastName },

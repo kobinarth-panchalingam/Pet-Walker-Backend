@@ -1,14 +1,14 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import express from "express";
-import http from "http";
 import cors from "cors";
-import { typeDefs } from "./src/typeDefs/typeDefs.js";
-import { resolvers } from "./src/resolvers/resolvers.js";
+import express from "express";
 import { GraphQLError } from "graphql";
-import { prisma } from "./src/prisma/prisma.js";
+import http from "http";
 import authRoutes, { getUserFromToken } from "./src/auth/auth.js";
+import { prisma } from "./src/prisma/prisma.js";
+import { resolvers } from "./src/resolvers/resolvers.js";
+import { typeDefs } from "./src/typeDefs/typeDefs.js";
 
 interface MyContext {
   token?: string;
@@ -40,7 +40,8 @@ app.use(
       const token = req.headers.authorization || "";
       const user = await getUserFromToken(token);
 
-      if (!user) {
+      // Introspection query is allowed without authentication
+      if (!user && !req.body.query.trim().startsWith('query Introspection')) {
         throw new GraphQLError("User is not authenticated", {
           extensions: {
             code: "UNAUTHENTICATED",
@@ -56,7 +57,7 @@ app.use(
         prisma,
       };
     },
-  })
+  })  
 );
 
 await new Promise<void>((resolve) => httpServer.listen({ port: process.env.PORT || 4000 }, resolve));
