@@ -29,11 +29,14 @@ await server.start();
 
 app.use(express.json());
 
+app.use(cors({
+  origin: [process.env.FRONTEND_URL]
+}));
+
 app.use("/auth", authRoutes);
 
 app.use(
   "/",
-  cors<cors.CorsRequest>(),
   // expressMiddleware accepts the same arguments:
   // an Apollo Server instance and optional configuration options
   expressMiddleware(server, {
