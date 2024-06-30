@@ -8,6 +8,9 @@ const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
 
 interface JwtPayload extends JWT {
+  firstName: string;
+  lastName: string;
+  email: string;
   userId: number;
   role: "OWNER" | "WALKER" | "ADMIN";
 }
@@ -43,8 +46,16 @@ router.post("/register", async (req: RegisterRequest, res: Response) => {
   const user = await prisma.user.create({
     data: { email, password: hashedPassword, role, firstName, lastName },
   });
-  const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
-  res.json({ token, user });
+
+  const token = jwt.sign({ 
+    userId: user.id, 
+    role: user.role,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }, JWT_SECRET, { expiresIn: "1d" });
+  
+  res.json({ token });
 });
 
 router.post("/login", async (req: LoginRequest, res: Response) => {
@@ -55,8 +66,15 @@ router.post("/login", async (req: LoginRequest, res: Response) => {
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) return res.status(401).json({ error: "Invalid credentials" });
 
-  const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
-  res.json({ token, user });
+  const token = jwt.sign({ 
+    userId: user.id, 
+    role: user.role,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }, JWT_SECRET, { expiresIn: "1d" });
+
+  res.json({ token });
 });
 
 router.post("/verify-token", (req: Request, res: Response) => {
