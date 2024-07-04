@@ -18,6 +18,7 @@
   "include": [
     "src",
     "index.ts",
-    "src/auth/auth.ts"
+    "src/auth/auth.ts",
+    "eslintrc.cjs"
   ]
 }
