@@ -1,8 +1,22 @@
+import { logger } from '../utils/logger';
+
 export const userResolvers = {
   User: {
-    pets: ( parent, _, ctx ) => ctx.prisma.user.findUnique( { where: { id: parent.id }, select: { Pets: true } } ).Pets()
+    pets: ( parent, _, ctx ) => {
+      return ctx.prisma.user.findUnique( { where: { id: parent.id }, select: { Pets: true } } )
+        .then( user => {
+          logger.info( `Successfully fetched pets of user ${parent.email}` );
+          return user.Pets;
+        } );
+    }
   },
   Query: {
-    getUsers: ( _, __, ctx ) => ctx.prisma.user.findMany()
+    getUsers: ( _, __, ctx ) => {
+      return ctx.prisma.user.findMany()
+        .then( users => {
+          logger.info( `Successfully fetched all users of count ${users.length}` );
+          return users;
+        } );
+    }
   }
 };

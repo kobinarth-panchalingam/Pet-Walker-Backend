@@ -1,9 +1,9 @@
 import { prisma } from '../database/prisma';
+import { AuthenticationError } from '../utils/errors';
 import { getUserFromToken } from '../utils/jwtUtils';
 
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { GraphQLError } from 'graphql';
 
 const createApolloMiddleware = ( server: ApolloServer ) => expressMiddleware( server, {
   context: async( { req } ) => {
@@ -12,14 +12,7 @@ const createApolloMiddleware = ( server: ApolloServer ) => expressMiddleware( se
 
     // Introspection query is allowed without authentication
     if ( !user && !req.body.query.trim().startsWith( 'query Introspection' ) ) {
-      throw new GraphQLError( 'User is not authenticated', {
-        extensions: {
-          code: 'UNAUTHENTICATED',
-          http: {
-            status: 401
-          }
-        }
-      } );
+      throw new AuthenticationError( 'User not authenticated' );
     }
 
     return {
