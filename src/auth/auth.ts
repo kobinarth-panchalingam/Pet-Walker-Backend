@@ -1,5 +1,7 @@
+import { LOGIN, REGISTER, VERIFY_TOKEN } from '../constants/routes.js';
 import { prisma } from '../database/prisma.js';
 import { signToken, verifyToken } from '../utils/jwtUtils.js';
+import { logger } from '../utils/logger.js';
 
 import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
@@ -23,7 +25,7 @@ interface LoginRequest extends Request {
 
 const router = express.Router();
 
-router.post( '/register', async( req: RegisterRequest, res: Response, next ) => {
+router.post( REGISTER, async( req: RegisterRequest, res: Response, next ) => {
   try {
     const { email, password, role, firstName, lastName } = req.body;
 
@@ -48,13 +50,14 @@ router.post( '/register', async( req: RegisterRequest, res: Response, next ) => 
       email: user.email
     } );
 
+    logger.info( `User ${ user.email } registered` );
     res.json( { token } );
   } catch ( error ) {
     next( error );
   }
 } );
 
-router.post( '/login', async( req: LoginRequest, res: Response, next ) => {
+router.post( LOGIN, async( req: LoginRequest, res: Response, next ) => {
   try {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique( { where: { email } } );
@@ -75,13 +78,14 @@ router.post( '/login', async( req: LoginRequest, res: Response, next ) => {
       email: user.email
     } );
 
+    logger.info( `User ${ user.email } logged in` );
     res.json( { token } );
   } catch ( error ) {
     next( error );
   }
 } );
 
-router.post( '/verify-token', ( req: Request, res: Response, next ) => {
+router.post( VERIFY_TOKEN, ( req: Request, res: Response, next ) => {
   try {
     const { token } = req.body;
     const user = verifyToken( token );

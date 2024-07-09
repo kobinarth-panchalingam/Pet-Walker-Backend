@@ -1,4 +1,4 @@
-import { prisma } from '../database/prisma';
+import { prisma } from '../database/prisma.js';
 import { AuthenticationError } from '../utils/errors';
 import { getUserFromToken } from '../utils/jwtUtils';
 

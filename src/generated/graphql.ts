@@ -43,8 +43,8 @@ export type Pet = {
 export type PetAdd = {
   breed: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
-  dob: Scalars['Date']['input'];
   name: Scalars['String']['input'];
+  ownerId: Scalars['Int']['input'];
 };
 
 export type Query = {

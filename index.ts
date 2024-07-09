@@ -1,4 +1,5 @@
 import { router as authRoutes } from './src/auth/auth.js';
+import { AUTH } from './src/constants/routes.js';
 import { createApolloMiddleware } from './src/middlewares/apolloMiddleware.js';
 import { errorHandler } from './src/middlewares/errorHandler.js';
 import { resolvers } from './src/resolvers/index.js';
@@ -11,6 +12,7 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
+//todo: have to define context type
 interface MyContext {
   token?: string;
 }
@@ -27,7 +29,7 @@ await server.start();
 
 app.use( express.json() );
 app.use( cors( { origin: [ process.env.FRONTEND_URL ] } ) );
-app.use( '/auth', authRoutes );
+app.use( AUTH, authRoutes );
 app.use( createApolloMiddleware( server ) );
 app.use( errorHandler );
 

@@ -1,11 +1,32 @@
-export const petResolvers = {
+import { Resolvers } from '../generated/graphql';
+import { logger } from '../utils/logger';
+
+export const petResolvers: Resolvers = {
   Pet: {
-    owner: ( parent, _, ctx ) => ctx.prisma.pet.findUnique( { where: { id: parent.id } } ).owner()
+    owner: ( parent, _, ctx ) => {
+      return ctx.prisma.user.findUnique( { where: { id: parent.ownerId } } )
+        .then( user => {
+          logger.info( `Successfully fetched owner of pet id-${parent.id} name-${parent.name}` );
+          return user;
+        } );
+    }
   },
   Query: {
-    getPets: ( _, __, ctx ) => ctx.prisma.pet.findMany()
+    getPets: ( _, __, ctx ) => {
+      return ctx.prisma.pet.findMany()
+        .then( pets => {
+          logger.info( `Successfully fetched all pets of count ${pets.length}` );
+          return pets;
+        } );
+    }
   },
   Mutation: {
-    addPet: ( _, args, ctx ) => ctx.prisma.pet.create( { data: args.input } )
+    addPet: ( _, args, ctx ) => {
+      return ctx.prisma.pet.create( { data: args.input } )
+        .then( pet => {
+          logger.info( `Successfully added pet id-${pet.id} name-${pet.name}` );
+          return pet;
+        } );
+    }
   }
 };
