@@ -1,8 +1,8 @@
-import { Resolvers } from '../generated/graphql.js';
+import { Resolvers } from '../generated/graphql';
 
-import { dateResolver } from './scalars/dateResolver.js';
-import { petResolvers } from './petResolver.js';
-import { userResolvers } from './userResolver.js';
+import { dateResolver } from './scalars/dateResolver';
+import { petResolvers } from './petResolver';
+import { userResolvers } from './userResolver';
 
 export const resolvers: Resolvers = {
   Query: {

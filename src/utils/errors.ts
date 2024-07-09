@@ -1,4 +1,3 @@
-
 import { GraphQLError } from 'graphql';
 
 class CustomGraphQLError extends GraphQLError {

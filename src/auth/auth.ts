@@ -1,7 +1,7 @@
-import { LOGIN, REGISTER, VERIFY_TOKEN } from '../constants/routes.js';
-import { prisma } from '../database/prisma.js';
-import { signToken, verifyToken } from '../utils/jwtUtils.js';
-import { logger } from '../utils/logger.js';
+import { LOGIN, REGISTER, VERIFY_TOKEN } from '../constants/routes';
+import { prisma } from '../database/prisma';
+import { signToken, verifyToken } from '../utils/jwtUtils';
+import { logger } from '../utils/logger';
 
 import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "npm run build && node dist/index.js",
     "dev": "npm run codegen && tsx watch --env-file=.env.development index.ts",
     "lint": "eslint **/*.ts",
@@ -44,6 +44,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.2.5",
     "prisma": "^5.14.0",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   }

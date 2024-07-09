@@ -10,10 +10,15 @@
     "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "types": [
       "node"
-    ]
+    ],
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
   },
   "include": [
     "src",

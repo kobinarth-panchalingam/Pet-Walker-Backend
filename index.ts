@@ -1,10 +1,10 @@
-import { router as authRoutes } from './src/auth/auth.js';
-import { AUTH } from './src/constants/routes.js';
-import { createApolloMiddleware } from './src/middlewares/apolloMiddleware.js';
-import { errorHandler } from './src/middlewares/errorHandler.js';
-import { resolvers } from './src/resolvers/index.js';
-import { typeDefs } from './src/typeDefs/index.js';
-import { logger } from './src/utils/logger.js';
+import { router as AuthRoutes } from './src/auth/auth';
+import { AUTH } from './src/constants/routes';
+import { createApolloMiddleware } from './src/middlewares/apolloMiddleware';
+import { errorHandler } from './src/middlewares/errorHandler';
+import { resolvers } from './src/resolvers';
+import { typeDefs } from './src/typeDefs';
+import { logger } from './src/utils/logger';
 
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -29,7 +29,7 @@ await server.start();
 
 app.use( express.json() );
 app.use( cors( { origin: [ process.env.FRONTEND_URL ] } ) );
-app.use( AUTH, authRoutes );
+app.use( AUTH, AuthRoutes );
 app.use( createApolloMiddleware( server ) );
 app.use( errorHandler );
 

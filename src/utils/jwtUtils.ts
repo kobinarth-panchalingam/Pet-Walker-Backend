@@ -1,4 +1,3 @@
-
 import { prisma } from '../database/prisma';
 
 import jwt, { JwtPayload as JWT } from 'jsonwebtoken';
