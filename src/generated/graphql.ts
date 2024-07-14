@@ -114,7 +114,7 @@ export type UserUpdate = {
   district?: InputMaybe<Scalars['String']['input']>;
   dob?: InputMaybe<Scalars['Date']['input']>;
   emergencyContacts?: InputMaybe<Array<EmergencyContactUpdate>>;
-  firstName: Scalars['String']['input'];
+  firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   profilePhoto?: InputMaybe<Scalars['String']['input']>;

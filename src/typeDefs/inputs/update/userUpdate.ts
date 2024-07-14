@@ -5,9 +5,9 @@ export const userUpdate = gql`
         name: String!
         phoneNumber: String!
     }
-        
+
     input UserUpdate {
-        firstName: String!
+        firstName: String
         lastName: String
         phoneNumber: String
         dob: Date

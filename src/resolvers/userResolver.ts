@@ -31,7 +31,7 @@ export const userResolvers: Resolvers = {
   Mutation: {
     updateUser: async( _, args, ctx ) => {
       const { firstName, lastName, phoneNumber, dob, street, city, district, zipCode, profilePhoto, emergencyContacts } = args.input;
-      console.log( dob );
+
       // Update user in the database
       const updatedUser = await ctx.prisma.user.update( {
         where: { id: ctx.user.id },
@@ -39,6 +39,15 @@ export const userResolvers: Resolvers = {
         include: { EmergencyContacts: true }
       } );
       logger.info( `Successfully updated user id-${updatedUser.id}, email-${updatedUser.email}` );
+
+      // Delete emergency contacts that are not in the updated list
+      if ( emergencyContacts !== undefined ) {
+        updatedUser.EmergencyContacts.forEach( async( contact ) => {
+          if ( !emergencyContacts.some( c => c.phoneNumber === contact.phoneNumber ) ) {
+            await ctx.prisma.emergencyContact.delete( { where: { phoneNumber: contact.phoneNumber } } );
+          }
+        } );
+      }
 
       // Update emergency contacts
       if ( emergencyContacts && emergencyContacts.length > 0 ) {

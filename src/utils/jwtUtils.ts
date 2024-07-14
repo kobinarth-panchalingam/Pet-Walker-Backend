@@ -36,7 +36,6 @@ const verifyToken = ( token: string ) => {
 };
 
 const getUserFromToken = async( token: string ) => {
-  console.log( token );
   // remove bearer from token
   token = token.split( ' ' )[1];
   try {
