@@ -27,7 +27,7 @@ const server = new ApolloServer<MyContext>( {
 } );
 await server.start();
 
-app.use( express.json() );
+app.use( express.json( { limit: '50mb' } ) );
 app.use( cors( { origin: [ process.env.FRONTEND_URL ] } ) );
 app.use( AUTH, AuthRoutes );
 app.use( createApolloMiddleware( server ) );

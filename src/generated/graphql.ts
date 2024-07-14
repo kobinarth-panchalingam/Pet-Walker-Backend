@@ -17,14 +17,36 @@ export type Scalars = {
   Date: { input: any; output: any; }
 };
 
+export type EmergencyContact = {
+  __typename?: 'EmergencyContact';
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  phoneNumber: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+  user: User;
+  userId: Scalars['Int']['output'];
+};
+
+export type EmergencyContactUpdate = {
+  name: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPet?: Maybe<Pet>;
+  updateUser?: Maybe<User>;
 };
 
 
 export type MutationAddPetArgs = {
   input: PetAdd;
+};
+
+
+export type MutationUpdateUserArgs = {
+  input: UserUpdate;
 };
 
 export type Pet = {
@@ -33,23 +55,24 @@ export type Pet = {
   createdAt: Scalars['String']['output'];
   description?: Maybe<Scalars['String']['output']>;
   dob?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
-  owner: User;
-  ownerId: Scalars['Int']['output'];
   updatedAt: Scalars['String']['output'];
+  user: User;
+  userId: Scalars['Int']['output'];
 };
 
 export type PetAdd = {
   breed: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
-  ownerId: Scalars['Int']['input'];
+  userId: Scalars['Int']['input'];
 };
 
 export type Query = {
   __typename?: 'Query';
   getPets?: Maybe<Array<Maybe<Pet>>>;
+  getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
 };
 
@@ -67,15 +90,36 @@ export enum Status {
 
 export type User = {
   __typename?: 'User';
-  address?: Maybe<Scalars['String']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['String']['output'];
+  district?: Maybe<Scalars['String']['output']>;
+  dob?: Maybe<Scalars['Date']['output']>;
   email: Scalars['String']['output'];
+  emergencyContacts?: Maybe<Array<EmergencyContact>>;
   firstName: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
   pets: Array<Pet>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  profilePhoto?: Maybe<Scalars['String']['output']>;
   role: Role;
   status: Status;
+  street?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['String']['output'];
+  zipCode?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserUpdate = {
+  city?: InputMaybe<Scalars['String']['input']>;
+  district?: InputMaybe<Scalars['String']['input']>;
+  dob?: InputMaybe<Scalars['Date']['input']>;
+  emergencyContacts?: InputMaybe<Array<EmergencyContactUpdate>>;
+  firstName: Scalars['String']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  profilePhoto?: InputMaybe<Scalars['String']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+  zipCode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -151,7 +195,8 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  EmergencyContact: ResolverTypeWrapper<EmergencyContact>;
+  EmergencyContactUpdate: EmergencyContactUpdate;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Pet: ResolverTypeWrapper<Pet>;
@@ -161,13 +206,15 @@ export type ResolversTypes = {
   Status: Status;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
+  UserUpdate: UserUpdate;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Date: Scalars['Date']['output'];
-  ID: Scalars['ID']['output'];
+  EmergencyContact: EmergencyContact;
+  EmergencyContactUpdate: EmergencyContactUpdate;
   Int: Scalars['Int']['output'];
   Mutation: {};
   Pet: Pet;
@@ -175,14 +222,27 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   User: User;
+  UserUpdate: UserUpdate;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
 
+export type EmergencyContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['EmergencyContact'] = ResolversParentTypes['EmergencyContact']> = {
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  phoneNumber?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addPet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<MutationAddPetArgs, 'input'>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
 };
 
 export type PetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = {
@@ -190,34 +250,44 @@ export type PetResolvers<ContextType = any, ParentType extends ResolversParentTy
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   dob?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  ownerId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getPets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Pet']>>>, ParentType, ContextType>;
+  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  district?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dob?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emergencyContacts?: Resolver<Maybe<Array<ResolversTypes['EmergencyContact']>>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   pets?: Resolver<Array<ResolversTypes['Pet']>, ParentType, ContextType>;
+  phoneNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profilePhoto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['Status'], ParentType, ContextType>;
+  street?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  zipCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
+  EmergencyContact?: EmergencyContactResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Pet?: PetResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

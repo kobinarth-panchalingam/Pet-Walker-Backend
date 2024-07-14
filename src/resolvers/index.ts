@@ -10,6 +10,7 @@ export const resolvers: Resolvers = {
     ...petResolvers.Query
   },
   Mutation: {
+    ...userResolvers.Mutation,
     ...petResolvers.Mutation
   },
   User: userResolvers.User,

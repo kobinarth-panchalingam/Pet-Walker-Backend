@@ -4,7 +4,7 @@ export const petAdd = gql`
   input PetAdd {
     name: String!
     breed: String!
-    ownerId: Int!
+    userId: Int!
     description: String
   }
 `;

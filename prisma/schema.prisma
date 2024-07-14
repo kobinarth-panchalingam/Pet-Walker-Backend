@@ -9,16 +9,34 @@ generator client {
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    email     String   @unique
-    password  String
-    firstName String
-    lastName  String?
-    address   String?
-    status    Status   @default(PENDING)
-    role      Role     @default(OWNER)
-    createdAt DateTime @default(now())
-    Pets      Pet[]
+    id                Int                @id @default(autoincrement())
+    email             String             @unique
+    password          String
+    firstName         String
+    lastName          String?
+    phoneNumber       String?            @unique
+    dob               DateTime?
+    street            String?
+    city              String?
+    district          String?
+    zipCode           String?
+    profilePhoto      String?
+    status            Status             @default(PENDING)
+    role              Role               @default(OWNER)
+    updatedAt         DateTime           @updatedAt
+    createdAt         DateTime           @default(now())
+    Pets              Pet[]
+    EmergencyContacts EmergencyContact[]
+}
+
+model EmergencyContact {
+    id          Int      @id @default(autoincrement())
+    name        String
+    phoneNumber String   @unique
+    userId      Int
+    user        User     @relation(fields: [userId], references: [id])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }
 
 model Pet {
@@ -27,8 +45,8 @@ model Pet {
     breed       String
     dob         DateTime?
     description String?
-    ownerId     Int
-    owner       User      @relation(fields: [ownerId], references: [id])
+    userId      Int
+    user        User      @relation(fields: [userId], references: [id])
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
 }

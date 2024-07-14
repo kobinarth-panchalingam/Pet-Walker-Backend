@@ -4,5 +4,6 @@ export const queries = gql`
   type Query {
     getUsers: [User]
     getPets: [Pet]
+    getUser: User
   }
 `;

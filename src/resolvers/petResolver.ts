@@ -3,8 +3,8 @@ import { logger } from '../utils/logger';
 
 export const petResolvers: Resolvers = {
   Pet: {
-    owner: ( parent, _, ctx ) => {
-      return ctx.prisma.user.findUnique( { where: { id: parent.ownerId } } )
+    user: ( parent, _, ctx ) => {
+      return ctx.prisma.user.findUnique( { where: { id: parent.userId } } )
         .then( user => {
           logger.info( `Successfully fetched owner of pet id-${parent.id} name-${parent.name}` );
           return user;

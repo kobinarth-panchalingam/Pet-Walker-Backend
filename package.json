@@ -10,7 +10,7 @@
     "dev": "npm run codegen && tsx watch --env-file=.env.development index.ts",
     "lint": "eslint **/*.ts",
     "codegen": "graphql-codegen --config codegen.ts",
-    "prisma": "npx prisma migrate dev"
+    "prisma": "dotenv -e .env.development -- npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +37,8 @@
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
