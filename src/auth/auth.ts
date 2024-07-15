@@ -43,7 +43,7 @@ router.post( REGISTER, async( req: RegisterRequest, res: Response, next ) => {
     } );
 
     const token = signToken( {
-      userId: user.id,
+      id: user.id,
       role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -71,7 +71,7 @@ router.post( LOGIN, async( req: LoginRequest, res: Response, next ) => {
     }
 
     const token = signToken( {
-      userId: user.id,
+      id: user.id,
       role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,

@@ -15,6 +15,8 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Date: { input: any; output: any; }
+  DateTime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
 };
 
 export type EmergencyContact = {
@@ -36,7 +38,7 @@ export type EmergencyContactUpdate = {
 export type Mutation = {
   __typename?: 'Mutation';
   addPet?: Maybe<Pet>;
-  updateUser?: Maybe<User>;
+  updateUser?: Maybe<MutationResponse>;
 };
 
 
@@ -47,6 +49,14 @@ export type MutationAddPetArgs = {
 
 export type MutationUpdateUserArgs = {
   input: UserUpdate;
+};
+
+export type MutationResponse = {
+  __typename?: 'MutationResponse';
+  code: Scalars['String']['output'];
+  data?: Maybe<Scalars['JSON']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
 };
 
 export type Pet = {
@@ -195,10 +205,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   EmergencyContact: ResolverTypeWrapper<EmergencyContact>;
   EmergencyContactUpdate: EmergencyContactUpdate;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  MutationResponse: ResolverTypeWrapper<MutationResponse>;
   Pet: ResolverTypeWrapper<Pet>;
   PetAdd: PetAdd;
   Query: ResolverTypeWrapper<{}>;
@@ -213,10 +226,13 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Date: Scalars['Date']['output'];
+  DateTime: Scalars['DateTime']['output'];
   EmergencyContact: EmergencyContact;
   EmergencyContactUpdate: EmergencyContactUpdate;
   Int: Scalars['Int']['output'];
+  JSON: Scalars['JSON']['output'];
   Mutation: {};
+  MutationResponse: MutationResponse;
   Pet: Pet;
   PetAdd: PetAdd;
   Query: {};
@@ -227,6 +243,10 @@ export type ResolversParentTypes = {
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
+}
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
 }
 
 export type EmergencyContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['EmergencyContact'] = ResolversParentTypes['EmergencyContact']> = {
@@ -240,9 +260,21 @@ export type EmergencyContactResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+  name: 'JSON';
+}
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addPet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<MutationAddPetArgs, 'input'>>;
-  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['MutationResponse']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
+};
+
+export type MutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = {
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type PetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = {
@@ -287,8 +319,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
   EmergencyContact?: EmergencyContactResolvers<ContextType>;
+  JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
+  MutationResponse?: MutationResponseResolvers<ContextType>;
   Pet?: PetResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

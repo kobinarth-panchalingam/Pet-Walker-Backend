@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "graphql": "^16.8.1",
+    "graphql-scalars": "^1.23.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
     "winston": "^3.13.0"

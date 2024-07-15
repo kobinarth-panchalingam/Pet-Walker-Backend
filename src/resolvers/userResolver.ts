@@ -42,11 +42,13 @@ export const userResolvers: Resolvers = {
 
       // Delete emergency contacts that are not in the updated list
       if ( emergencyContacts !== undefined ) {
-        updatedUser.EmergencyContacts.forEach( async( contact ) => {
-          if ( !emergencyContacts.some( c => c.phoneNumber === contact.phoneNumber ) ) {
-            await ctx.prisma.emergencyContact.delete( { where: { phoneNumber: contact.phoneNumber } } );
-          }
-        } );
+        // Identify contacts to delete
+        const contactsToDelete = updatedUser.EmergencyContacts.filter( contact =>
+          !emergencyContacts.some( c => c.phoneNumber === contact.phoneNumber ) );
+
+        // Delete contacts not in the updated list
+        await Promise.all( contactsToDelete.map( contact =>
+          ctx.prisma.emergencyContact.delete( { where: { id: contact.id } } ) ) );
       }
 
       // Update emergency contacts
@@ -79,7 +81,12 @@ export const userResolvers: Resolvers = {
       } );
 
       logger.info( `Successfully fetched user id-${userWithContacts.id}, email-${userWithContacts.email}` );
-      return userWithContacts;
+      return {
+        code: '200',
+        success: true,
+        message: 'User updated successfully',
+        data: userWithContacts
+      };
     }
   }
 };

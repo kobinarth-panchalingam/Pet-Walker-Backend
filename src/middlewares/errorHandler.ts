@@ -1,6 +1,7 @@
 import { logger } from '../utils/logger';
 
 import { NextFunction, Request, Response } from 'express';
+import { GraphQLFormattedError } from 'graphql';
 
 const errorHandler = ( err: any, req: Request, res: Response, next: NextFunction ) => {
   logger.error( err.stack );
@@ -14,4 +15,16 @@ const errorHandler = ( err: any, req: Request, res: Response, next: NextFunction
   } );
 };
 
-export { errorHandler };
+const formatError = ( formattedError:GraphQLFormattedError, error: unknown ) => {
+  if ( formattedError.extensions.code === 'INTERNAL_SERVER_ERROR' ) {
+    console.log( formattedError );
+    return {
+      ...formattedError,
+      message: 'Internal Server Error'
+    };
+  }
+  return formattedError;
+};
+
+export { errorHandler, formatError };
+

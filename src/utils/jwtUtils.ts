@@ -3,10 +3,10 @@ import { prisma } from '../database/prisma';
 import jwt, { JwtPayload as JWT } from 'jsonwebtoken';
 
 interface JwtPayload extends JWT {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
-  userId: number;
   role: 'OWNER' | 'WALKER' | 'ADMIN';
 }
 
@@ -20,7 +20,7 @@ const signToken = ( payload: JwtPayload ) => {
 const generateToken = ( user: JwtPayload ) => {
   return jwt.sign(
     {
-      userId: user.userId,
+      id: user.id,
       role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -40,7 +40,7 @@ const getUserFromToken = async( token: string ) => {
   token = token.split( ' ' )[1];
   try {
     const payload: JwtPayload = verifyToken( token );
-    return await prisma.user.findUnique( { where: { id: payload.userId } } );
+    return payload;
   } catch ( err ) {
     return null;
   }

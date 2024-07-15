@@ -1,8 +1,9 @@
 import { Resolvers } from '../generated/graphql';
 
-import { dateResolver } from './scalars/dateResolver';
 import { petResolvers } from './petResolver';
 import { userResolvers } from './userResolver';
+
+import { DateResolver, DateTimeResolver, JSONResolver } from 'graphql-scalars';
 
 export const resolvers: Resolvers = {
   Query: {
@@ -15,5 +16,7 @@ export const resolvers: Resolvers = {
   },
   User: userResolvers.User,
   Pet: petResolvers.Pet,
-  Date: dateResolver
+  Date: DateResolver,
+  DateTime: DateTimeResolver,
+  JSON: JSONResolver
 };
