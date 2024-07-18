@@ -7,8 +7,8 @@ export const user = gql`
     phoneNumber: String!
     userId: Int!
     user: User!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type User {
@@ -26,8 +26,8 @@ export const user = gql`
     emergencyContacts: [EmergencyContact!]
     status: Status!
     role: Role!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
     pets: [Pet!]!
   }
 `;

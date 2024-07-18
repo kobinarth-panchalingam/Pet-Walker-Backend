@@ -2,7 +2,7 @@ import { prisma } from '../database/prisma';
 
 import jwt, { JwtPayload as JWT } from 'jsonwebtoken';
 
-interface JwtPayload extends JWT {
+export interface JwtPayload extends JWT {
   id: number;
   firstName: string;
   lastName: string;

@@ -5,7 +5,7 @@ export const pet = gql`
     id: Int!
     name: String!
     breed: String!
-    dob: String
+    dob: Date
     description: String
     userId: Int!
     user: User!

@@ -1,6 +1,6 @@
 import { router as AuthRoutes } from './src/auth/auth';
 import { AUTH } from './src/constants/routes';
-import { createApolloMiddleware } from './src/middlewares/apolloMiddleware';
+import { Context, createApolloMiddleware } from './src/middlewares/apolloMiddleware';
 import { errorHandler, formatError } from './src/middlewares/errorHandler';
 import { resolvers } from './src/resolvers';
 import { typeDefs } from './src/typeDefs';
@@ -12,14 +12,9 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
-//todo: have to define context type
-interface MyContext {
-  token?: string;
-}
-
 const app = express();
 const httpServer = http.createServer( app );
-const server = new ApolloServer<MyContext>( {
+const server = new ApolloServer<Context>( {
   typeDefs,
   resolvers,
   formatError,

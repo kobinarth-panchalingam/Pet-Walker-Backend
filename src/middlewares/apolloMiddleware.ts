@@ -1,12 +1,18 @@
 import { prisma } from '../database/prisma';
 import { AuthenticationError } from '../utils/errors';
-import { getUserFromToken } from '../utils/jwtUtils';
+import { getUserFromToken, JwtPayload } from '../utils/jwtUtils';
 
-import { ApolloServer } from '@apollo/server';
+import { ApolloServer, BaseContext } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
+import { PrismaClient } from '@prisma/client';
 
-const createApolloMiddleware = ( server: ApolloServer ) => expressMiddleware( server, {
-  context: async( { req } ) => {
+interface Context extends BaseContext {
+  user: JwtPayload | null;
+  prisma: PrismaClient
+}
+
+const createApolloMiddleware = ( server: ApolloServer<Context> ) => expressMiddleware( server, {
+  context: async( { req } ): Promise<Context> => {
     const token = req.headers.authorization || '';
     const user = await getUserFromToken( token );
 
@@ -22,4 +28,4 @@ const createApolloMiddleware = ( server: ApolloServer ) => expressMiddleware( se
   }
 } );
 
-export { createApolloMiddleware };
+export { createApolloMiddleware, Context };
