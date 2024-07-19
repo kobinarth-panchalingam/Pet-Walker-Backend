@@ -3,20 +3,24 @@ import { AUTH } from './src/constants/routes';
 import { Context, createApolloMiddleware } from './src/middlewares/apolloMiddleware';
 import { errorHandler, formatError } from './src/middlewares/errorHandler';
 import { resolvers } from './src/resolvers';
+import { upperDirectiveTransformer } from './src/resolvers/directives/upperCaseDirectiveResolver';
 import { typeDefs } from './src/typeDefs';
 import { logger } from './src/utils/logger';
 
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import cors from 'cors';
 import express from 'express';
 import http from 'http';
-
 const app = express();
 const httpServer = http.createServer( app );
+
+let schema = makeExecutableSchema( { typeDefs, resolvers } );
+schema = upperDirectiveTransformer( schema, 'uppercase' );
+
 const server = new ApolloServer<Context>( {
-  typeDefs,
-  resolvers,
+  schema,
   formatError,
   plugins: [ ApolloServerPluginDrainHttpServer( { httpServer } ) ],
   introspection: true,

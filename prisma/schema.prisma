@@ -10,45 +10,114 @@ generator client {
 
 model User {
     id                Int                @id @default(autoincrement())
-    email             String             @unique
-    password          String
-    firstName         String
-    lastName          String?
-    phoneNumber       String?            @unique
-    dob               DateTime?
-    street            String?
-    city              String?
-    district          String?
-    zipCode           String?
-    profilePhoto      String?
-    status            Status             @default(PENDING)
-    role              Role               @default(OWNER)
-    updatedAt         DateTime           @updatedAt
-    createdAt         DateTime           @default(now())
     Pets              Pet[]
     EmergencyContacts EmergencyContact[]
+
+    email        String    @unique
+    password     String
+    firstName    String
+    lastName     String?
+    phoneNumber  String?   @unique
+    dob          DateTime?
+    street       String?
+    city         String?
+    district     String?
+    zipCode      String?
+    profilePhoto String?
+    status       Status    @default(PENDING)
+    role         Role      @default(OWNER)
+
+    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
 }
 
 model EmergencyContact {
-    id          Int      @id @default(autoincrement())
+    id     Int  @id @default(autoincrement())
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
+
     name        String
-    phoneNumber String   @unique
-    userId      Int
-    user        User     @relation(fields: [userId], references: [id])
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    phoneNumber String @unique
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Pet {
-    id          Int       @id @default(autoincrement())
-    name        String
-    breed       String
-    dob         DateTime?
-    description String?
-    userId      Int
-    user        User      @relation(fields: [userId], references: [id])
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
+    id      Int   @id @default(autoincrement())
+    userId  Int
+    user    User  @relation(fields: [userId], references: [id])
+    breedId Int
+    breed   Breed @relation(fields: [breedId], references: [id])
+
+    petType PetType   @default(DOG)
+    name    String
+    dob     DateTime?
+    photo   String?
+    gender  Gender
+    weight  Float
+
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @updatedAt
+    PetDetails PetDetails?
+}
+
+model Breed {
+    id  Int   @id @default(autoincrement())
+    Pet Pet[]
+
+    name    String
+    petType PetType
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PetDetails {
+    id    Int @id @default(autoincrement())
+    petId Int @unique
+    pet   Pet @relation(fields: [petId], references: [id])
+
+    spayedNeutered           YesNo
+    vaccinated               YesNo
+    energyLevel              EnergyLevel
+    preferredWalkingSchedule WalkingSchedule[]
+    feedingSchedule          Json
+    pottyBreakSchedule       Json
+    specialRequirements      String?
+    dietaryRestrictions      String?
+    behavioralTraits         String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum WalkingSchedule {
+    MORNING
+    AFTERNOON
+    EVENING
+    NIGHT
+}
+
+enum EnergyLevel {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum YesNo {
+    YES
+    NO
+}
+
+enum Gender {
+    MALE
+    FEMALE
+}
+
+enum PetType {
+    DOG
+    CAT
 }
 
 enum Role {

@@ -1,5 +1,7 @@
 import { Resolvers } from '../generated/graphql';
 
+import { breedResolver } from './breedResolver';
+import { petDetailsResolver } from './petDetailsResolver';
 import { petResolvers } from './petResolver';
 import { userResolvers } from './userResolver';
 
@@ -16,7 +18,10 @@ export const resolvers: Resolvers = {
   },
   User: userResolvers.User,
   Pet: petResolvers.Pet,
+  PetDetails: petDetailsResolver.PetDetails,
+  Breed: breedResolver.Breed,
   Date: DateResolver,
   DateTime: DateTimeResolver,
-  JSON: JSONResolver
+  JSON: JSONResolver,
+  
 };

@@ -1,18 +1,9 @@
 import { gql } from 'graphql-tag';
 
 export const user = gql`
-  type EmergencyContact {
-    id: Int!
-    name: String!
-    phoneNumber: String!
-    userId: Int!
-    user: User!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-  }
-
   type User {
     id: Int!
+    
     email: String!
     firstName: String!
     lastName: String
@@ -26,8 +17,9 @@ export const user = gql`
     emergencyContacts: [EmergencyContact!]
     status: Status!
     role: Role!
+    pets: [Pet!]!
+
     createdAt: DateTime!
     updatedAt: DateTime!
-    pets: [Pet!]!
   }
 `;
