@@ -1,7 +1,4 @@
-import { gql } from 'graphql-tag';
-
-export const breed = gql`
-  type Breed {
+type Breed {
     id: Int!
     pets: [Pet!]!
 
@@ -11,4 +8,3 @@ export const breed = gql`
     createdAt: DateTime!
     updatedAt: DateTime!
 }
-`;

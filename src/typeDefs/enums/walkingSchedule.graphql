@@ -1,0 +1,6 @@
+enum WalkingSchedule {
+    MORNING
+    AFTERNOON
+    EVENING
+    NIGHT
+  }

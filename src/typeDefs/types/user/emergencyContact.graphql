@@ -1,0 +1,4 @@
+type EmergencyContact {
+  name: String!
+  phoneNumber: String!
+}

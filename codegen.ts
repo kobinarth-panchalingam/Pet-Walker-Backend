@@ -2,10 +2,10 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "./src/typeDefs/**/*.ts",
+  schema: "./src/typeDefs/**/*.graphql",
   generates: {
     "src/generated/graphql.ts": {
-      plugins: ["typescript", "typescript-operations", "typescript-resolvers"],
+      plugins: ["typescript","typescript-resolvers"],
       config: {
         scalars: {
           Date: "Date",

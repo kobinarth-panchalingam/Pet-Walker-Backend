@@ -1,0 +1,6 @@
+input PetAdd {
+    name: String!
+    breed: String!
+    userId: Int!
+    description: String
+  }
