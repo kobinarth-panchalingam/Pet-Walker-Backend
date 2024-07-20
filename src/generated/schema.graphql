@@ -1,0 +1,163 @@
+directive @uppercase on ARGUMENT_DEFINITION | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+type Breed {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  petType: PetType!
+  pets: [Pet!]!
+  updatedAt: DateTime!
+}
+
+scalar Date
+
+scalar DateTime
+
+type EmergencyContact {
+  name: String!
+  phoneNumber: String!
+}
+
+input EmergencyContactUpdate {
+  name: String!
+  phoneNumber: String!
+}
+
+enum EnergyLevel {
+  HIGH
+  LOW
+  MEDIUM
+}
+
+enum Gender {
+  FEMALE
+  MALE
+}
+
+scalar JSON
+
+type Mutation {
+  addPet(input: PetAdd!): Pet
+  updateUser(input: UserUpdate!): MutationResponse
+}
+
+type MutationResponse {
+  code: String!
+  data: JSON
+  message: String
+  success: Boolean!
+}
+
+type Pet {
+  breed: Breed!
+  breedId: Int!
+  createdAt: DateTime!
+  dob: Date
+  gender: Gender!
+  id: Int!
+  name: String!
+  petDetails: PetDetails
+  petType: PetType!
+  photo: String
+  updatedAt: DateTime!
+  user: User!
+  userId: Int!
+  weight: Float!
+}
+
+input PetAdd {
+  breed: String!
+  description: String
+  name: String!
+  userId: Int!
+}
+
+type PetDetails {
+  behavioralTraits: PetDetailsFormat
+  createdAt: DateTime!
+  dietaryRestrictions: PetDetailsFormat
+  energyLevel: PetDetailsFormat!
+  feedingSchedule: PetDetailsFormat!
+  id: Int!
+  pet: Pet!
+  petId: Int!
+  pottyBreakSchedule: PetDetailsFormat!
+  preferredWalkingSchedule: [PetDetailsFormat!]!
+  spayedNeutered: PetDetailsFormat!
+  specialRequirements: PetDetailsFormat
+  updatedAt: DateTime!
+  vaccinated: PetDetailsFormat!
+}
+
+type PetDetailsFormat {
+  additionalDetails: String
+  value: String
+}
+
+enum PetType {
+  CAT
+  DOG
+}
+
+type Query {
+  getPets: [Pet]
+  getUser: User
+  getUsers: [User]
+}
+
+enum Role {
+  ADMIN
+  OWNER
+  WALKER
+}
+
+enum Status {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+type User {
+  city: String
+  createdAt: DateTime!
+  district: String
+  dob: Date
+  email: String!
+  emergencyContacts: [EmergencyContact!]
+  firstName: String!
+  id: Int!
+  lastName: String
+  pets: [Pet!]!
+  phoneNumber: String
+  profilePhoto: String
+  role: Role!
+  status: Status!
+  street: String
+  updatedAt: DateTime!
+  zipCode: String
+}
+
+input UserUpdate {
+  city: String
+  district: String
+  dob: Date
+  emergencyContacts: [EmergencyContactUpdate!]
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  profilePhoto: String
+  street: String
+  zipCode: String
+}
+
+enum WalkingSchedule {
+  AFTERNOON
+  EVENING
+  MORNING
+  NIGHT
+}
+
+enum YesNo {
+  NO
+  YES
+}
