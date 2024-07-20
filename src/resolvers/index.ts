@@ -1,9 +1,9 @@
 import { Resolvers } from '../generated/graphql';
 
-import { breedResolver } from './breedResolver';
-import { petDetailsResolver } from './petDetailsResolver';
-import { petResolvers } from './petResolver';
-import { userResolvers } from './userResolver';
+import { breedResolver } from './types/breedResolver';
+import { petDetailsResolver } from './types/petDetailsResolver';
+import { petResolvers } from './types/petResolver';
+import { userResolvers } from './types/userResolver';
 
 import { DateResolver, DateTimeResolver, JSONResolver } from 'graphql-scalars';
 
@@ -22,6 +22,5 @@ export const resolvers: Resolvers = {
   Breed: breedResolver.Breed,
   Date: DateResolver,
   DateTime: DateTimeResolver,
-  JSON: JSONResolver,
-  
+  JSON: JSONResolver
 };

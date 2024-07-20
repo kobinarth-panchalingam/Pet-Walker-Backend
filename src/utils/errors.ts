@@ -31,10 +31,15 @@ class NotFoundError extends CustomGraphQLError {
   }
 }
 
+class UserInputError extends CustomGraphQLError {
+  constructor( message: string = 'Invalid input' ) {
+    super( message, 'USER_INPUT_ERROR', 400 );
+  }
+}
 class PermissionError extends CustomGraphQLError {
   constructor( message: string = 'Permission denied' ) {
     super( message, 'PERMISSION_DENIED', 403 );
   }
 }
 
-export { AuthenticationError, ValidationError, NotFoundError, PermissionError };
+export { AuthenticationError, ValidationError, NotFoundError, PermissionError, UserInputError };

@@ -6,15 +6,15 @@ export const petDetails = gql`
         pet: Pet!
         petId: Int!
 
-        spayedNeutered: YesNo!
-        vaccinated: YesNo!
-        energyLevel: EnergyLevel!
-        preferredWalkingSchedule: [WalkingSchedule!]!
-        feedingSchedule: JSON!
-        pottyBreakSchedule: JSON!
-        specialRequirements: String
-        dietaryRestrictions: String
-        behavioralTraits: String
+        spayedNeutered: PetDetailsFormat!
+        vaccinated: PetDetailsFormat!
+        energyLevel: PetDetailsFormat!
+        preferredWalkingSchedule: [PetDetailsFormat!]!
+        feedingSchedule: PetDetailsFormat!
+        pottyBreakSchedule: PetDetailsFormat!
+        specialRequirements: PetDetailsFormat
+        dietaryRestrictions: PetDetailsFormat
+        behavioralTraits: PetDetailsFormat
 
         createdAt: DateTime!
         updatedAt: DateTime!

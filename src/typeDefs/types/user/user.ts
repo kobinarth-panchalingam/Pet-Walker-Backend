@@ -3,6 +3,8 @@ import { gql } from 'graphql-tag';
 export const user = gql`
   type User {
     id: Int!
+    emergencyContacts: [EmergencyContact!]
+    pets: [Pet!]!
     
     email: String!
     firstName: String!
@@ -14,10 +16,8 @@ export const user = gql`
     district: String
     zipCode: String
     profilePhoto: String
-    emergencyContacts: [EmergencyContact!]
     status: Status!
     role: Role!
-    pets: [Pet!]!
 
     createdAt: DateTime!
     updatedAt: DateTime!

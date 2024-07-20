@@ -9,46 +9,35 @@ generator client {
 }
 
 model User {
-    id                Int                @id @default(autoincrement())
-    Pets              Pet[]
-    EmergencyContacts EmergencyContact[]
+    id   Int   @id @default(autoincrement())
+    Pets Pet[]
 
-    email        String    @unique
-    password     String
-    firstName    String
-    lastName     String?
-    phoneNumber  String?   @unique
-    dob          DateTime?
-    street       String?
-    city         String?
-    district     String?
-    zipCode      String?
-    profilePhoto String?
-    status       Status    @default(PENDING)
-    role         Role      @default(OWNER)
+    email             String    @unique
+    password          String
+    firstName         String
+    lastName          String?
+    phoneNumber       String?   @unique
+    dob               DateTime?
+    street            String?
+    city              String?
+    district          String?
+    zipCode           String?
+    profilePhoto      String?
+    emergencyContacts Json[]
+    status            Status    @default(PENDING)
+    role              Role      @default(OWNER)
 
     updatedAt DateTime @updatedAt
     createdAt DateTime @default(now())
-}
-
-model EmergencyContact {
-    id     Int  @id @default(autoincrement())
-    userId Int
-    user   User @relation(fields: [userId], references: [id])
-
-    name        String
-    phoneNumber String @unique
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 }
 
 model Pet {
-    id      Int   @id @default(autoincrement())
-    userId  Int
-    user    User  @relation(fields: [userId], references: [id])
-    breedId Int
-    breed   Breed @relation(fields: [breedId], references: [id])
+    id         Int         @id @default(autoincrement())
+    userId     Int
+    user       User        @relation(fields: [userId], references: [id])
+    breedId    Int
+    breed      Breed       @relation(fields: [breedId], references: [id])
+    PetDetails PetDetails?
 
     petType PetType   @default(DOG)
     name    String
@@ -57,14 +46,13 @@ model Pet {
     gender  Gender
     weight  Float
 
-    createdAt  DateTime    @default(now())
-    updatedAt  DateTime    @updatedAt
-    PetDetails PetDetails?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Breed {
-    id  Int   @id @default(autoincrement())
-    Pet Pet[]
+    id   Int   @id @default(autoincrement())
+    Pets Pet[]
 
     name    String
     petType PetType
@@ -78,15 +66,15 @@ model PetDetails {
     petId Int @unique
     pet   Pet @relation(fields: [petId], references: [id])
 
-    spayedNeutered           YesNo
-    vaccinated               YesNo
-    energyLevel              EnergyLevel
-    preferredWalkingSchedule WalkingSchedule[]
+    spayedNeutered           Json
+    vaccinated               Json
+    energyLevel              Json
+    preferredWalkingSchedule Json[]
     feedingSchedule          Json
     pottyBreakSchedule       Json
-    specialRequirements      String?
-    dietaryRestrictions      String?
-    behavioralTraits         String?
+    specialRequirements      Json?
+    dietaryRestrictions      Json?
+    behavioralTraits         Json?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

@@ -1,5 +1,5 @@
-import { Resolvers } from '../generated/graphql';
-import { logger } from '../utils/logger';
+import { Resolvers } from '../../generated/graphql';
+import { logger } from '../../utils/logger';
 
 export const petResolvers: Resolvers = {
   Pet: {

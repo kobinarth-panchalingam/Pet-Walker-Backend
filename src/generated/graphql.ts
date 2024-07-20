@@ -31,13 +31,8 @@ export type Breed = {
 
 export type EmergencyContact = {
   __typename?: 'EmergencyContact';
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   phoneNumber: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-  user: User;
-  userId: Scalars['Int']['output'];
 };
 
 export type EmergencyContactUpdate = {
@@ -107,20 +102,26 @@ export type PetAdd = {
 
 export type PetDetails = {
   __typename?: 'PetDetails';
-  behavioralTraits?: Maybe<Scalars['String']['output']>;
+  behavioralTraits?: Maybe<PetDetailsFormat>;
   createdAt: Scalars['DateTime']['output'];
-  dietaryRestrictions?: Maybe<Scalars['String']['output']>;
-  energyLevel: EnergyLevel;
-  feedingSchedule: Scalars['JSON']['output'];
+  dietaryRestrictions?: Maybe<PetDetailsFormat>;
+  energyLevel: PetDetailsFormat;
+  feedingSchedule: PetDetailsFormat;
   id: Scalars['Int']['output'];
   pet: Pet;
   petId: Scalars['Int']['output'];
-  pottyBreakSchedule: Scalars['JSON']['output'];
-  preferredWalkingSchedule: Array<WalkingSchedule>;
-  spayedNeutered: YesNo;
-  specialRequirements?: Maybe<Scalars['String']['output']>;
+  pottyBreakSchedule: PetDetailsFormat;
+  preferredWalkingSchedule: Array<PetDetailsFormat>;
+  spayedNeutered: PetDetailsFormat;
+  specialRequirements?: Maybe<PetDetailsFormat>;
   updatedAt: Scalars['DateTime']['output'];
-  vaccinated: YesNo;
+  vaccinated: PetDetailsFormat;
+};
+
+export type PetDetailsFormat = {
+  __typename?: 'PetDetailsFormat';
+  additionalDetails?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
 };
 
 export enum PetType {
@@ -280,6 +281,7 @@ export type ResolversTypes = {
   Pet: ResolverTypeWrapper<Pet>;
   PetAdd: PetAdd;
   PetDetails: ResolverTypeWrapper<PetDetails>;
+  PetDetailsFormat: ResolverTypeWrapper<PetDetailsFormat>;
   PetType: PetType;
   Query: ResolverTypeWrapper<{}>;
   Role: Role;
@@ -307,6 +309,7 @@ export type ResolversParentTypes = {
   Pet: Pet;
   PetAdd: PetAdd;
   PetDetails: PetDetails;
+  PetDetailsFormat: PetDetailsFormat;
   Query: {};
   String: Scalars['String']['output'];
   User: User;
@@ -336,13 +339,8 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type EmergencyContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['EmergencyContact'] = ResolversParentTypes['EmergencyContact']> = {
-  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   phoneNumber?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -382,20 +380,26 @@ export type PetResolvers<ContextType = any, ParentType extends ResolversParentTy
 };
 
 export type PetDetailsResolvers<ContextType = any, ParentType extends ResolversParentTypes['PetDetails'] = ResolversParentTypes['PetDetails']> = {
-  behavioralTraits?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  behavioralTraits?: Resolver<Maybe<ResolversTypes['PetDetailsFormat']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  dietaryRestrictions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  energyLevel?: Resolver<ResolversTypes['EnergyLevel'], ParentType, ContextType>;
-  feedingSchedule?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  dietaryRestrictions?: Resolver<Maybe<ResolversTypes['PetDetailsFormat']>, ParentType, ContextType>;
+  energyLevel?: Resolver<ResolversTypes['PetDetailsFormat'], ParentType, ContextType>;
+  feedingSchedule?: Resolver<ResolversTypes['PetDetailsFormat'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   pet?: Resolver<ResolversTypes['Pet'], ParentType, ContextType>;
   petId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  pottyBreakSchedule?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
-  preferredWalkingSchedule?: Resolver<Array<ResolversTypes['WalkingSchedule']>, ParentType, ContextType>;
-  spayedNeutered?: Resolver<ResolversTypes['YesNo'], ParentType, ContextType>;
-  specialRequirements?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  pottyBreakSchedule?: Resolver<ResolversTypes['PetDetailsFormat'], ParentType, ContextType>;
+  preferredWalkingSchedule?: Resolver<Array<ResolversTypes['PetDetailsFormat']>, ParentType, ContextType>;
+  spayedNeutered?: Resolver<ResolversTypes['PetDetailsFormat'], ParentType, ContextType>;
+  specialRequirements?: Resolver<Maybe<ResolversTypes['PetDetailsFormat']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  vaccinated?: Resolver<ResolversTypes['YesNo'], ParentType, ContextType>;
+  vaccinated?: Resolver<ResolversTypes['PetDetailsFormat'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PetDetailsFormatResolvers<ContextType = any, ParentType extends ResolversParentTypes['PetDetailsFormat'] = ResolversParentTypes['PetDetailsFormat']> = {
+  additionalDetails?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -436,6 +440,7 @@ export type Resolvers<ContextType = any> = {
   MutationResponse?: MutationResponseResolvers<ContextType>;
   Pet?: PetResolvers<ContextType>;
   PetDetails?: PetDetailsResolvers<ContextType>;
+  PetDetailsFormat?: PetDetailsFormatResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

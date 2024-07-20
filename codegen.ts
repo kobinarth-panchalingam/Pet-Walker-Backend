@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   schema: "./src/typeDefs/**/*.ts",
   generates: {
     "src/generated/graphql.ts": {
-      plugins: ["typescript", "typescript-resolvers"],
+      plugins: ["typescript", "typescript-operations", "typescript-resolvers"],
       config: {
         scalars: {
           Date: "Date",

@@ -7,6 +7,7 @@ export const pet = gql`
     user: User!
     breedId: Int!
     breed: Breed!
+    petDetails: PetDetails
     
     petType: PetType!
     name: String!
@@ -14,7 +15,6 @@ export const pet = gql`
     photo: String
     gender: Gender!
     weight: Float!
-    petDetails: PetDetails
 
     createdAt: DateTime!
     updatedAt: DateTime!

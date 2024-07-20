@@ -15,6 +15,7 @@ import { mutationResponse } from './types/mutationResponse';
 import { breed } from './types/pet/breed';
 import { pet } from './types/pet/pet';
 import { petDetails } from './types/pet/petDetails';
+import { petDetailsFormat } from './types/pet/petDetailsFormat';
 import { emergencyContact } from './types/user/emergencyContact';
 import { user } from './types/user/user';
 import { mutations } from './mutations';
@@ -22,7 +23,7 @@ import { queries } from './queries';
 
 const directives = [ upperCase ];
 const enums = [ status, roles, gender, petType, energyLevel, yesNo, walkingSchedule ];
-const types = [ mutationResponse, user, emergencyContact, pet, petDetails, breed ];
+const types = [ mutationResponse, user, emergencyContact, petDetailsFormat, petDetails, pet, breed ];
 const inputs = [ petAdd, userUpdate ];
 const scalars = [ dateScalar, dateTimeScalar, jsonScalar ];
 
