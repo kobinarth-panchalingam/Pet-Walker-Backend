@@ -11,7 +11,7 @@ input UserUpdate {
     street: String
     city: String
     district: String
-    zipCode: String
+    zipCode: String @constraint(minLength: 5, maxLength: 5)
     profilePhoto: String
     emergencyContacts: [EmergencyContactUpdate!]
 }

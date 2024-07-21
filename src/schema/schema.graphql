@@ -1,12 +1,10 @@
-directive @uppercase on ARGUMENT_DEFINITION | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+directive @uppercase on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
 
 type Breed {
-  createdAt: DateTime!
   id: Int!
   name: String!
   petType: PetType!
   pets: [Pet!]!
-  updatedAt: DateTime!
 }
 
 scalar Date
@@ -37,7 +35,8 @@ enum Gender {
 scalar JSON
 
 type Mutation {
-  addPet(input: PetAdd!): Pet
+  addPet(input: PetAdd!): MutationResponse
+  updatePet(input: PetUpdate!): MutationResponse
   updateUser(input: UserUpdate!): MutationResponse
 }
 
@@ -66,10 +65,14 @@ type Pet {
 }
 
 input PetAdd {
-  breed: String!
-  description: String
+  breedId: Int!
+  dob: Date
+  gender: Gender!
   name: String!
-  userId: Int!
+  petDetails: PetDetailsAdd!
+  petType: PetType!
+  photo: String
+  weight: Float!
 }
 
 type PetDetails {
@@ -89,14 +92,43 @@ type PetDetails {
   vaccinated: PetDetailsFormat!
 }
 
+input PetDetailsAdd {
+  behavioralTraits: PetDetailsInputFormat
+  dietaryRestrictions: PetDetailsInputFormat
+  energyLevel: PetDetailsInputFormat!
+  feedingSchedule: PetDetailsInputFormat!
+  pottyBreakSchedule: PetDetailsInputFormat!
+  preferredWalkingSchedule: [PetDetailsInputFormat!]!
+  spayedNeutered: PetDetailsInputFormat!
+  specialRequirements: PetDetailsInputFormat
+  vaccinated: PetDetailsInputFormat!
+}
+
 type PetDetailsFormat {
   additionalDetails: String
   value: String
 }
 
+input PetDetailsInputFormat {
+  additionalDetails: String
+  value: String!
+}
+
 enum PetType {
   CAT
   DOG
+}
+
+input PetUpdate {
+  breedId: Int
+  dob: Date
+  gender: Gender
+  id: Int!
+  name: String
+  petDetails: PetDetailsAdd
+  petType: PetType
+  photo: String
+  weight: Float
 }
 
 type Query {

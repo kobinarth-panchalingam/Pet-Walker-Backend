@@ -80,24 +80,6 @@ model PetDetails {
     updatedAt DateTime @updatedAt
 }
 
-enum WalkingSchedule {
-    MORNING
-    AFTERNOON
-    EVENING
-    NIGHT
-}
-
-enum EnergyLevel {
-    LOW
-    MEDIUM
-    HIGH
-}
-
-enum YesNo {
-    YES
-    NO
-}
-
 enum Gender {
     MALE
     FEMALE

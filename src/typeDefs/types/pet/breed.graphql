@@ -4,7 +4,4 @@ type Breed {
 
     name: String!
     petType: PetType!
-
-    createdAt: DateTime!
-    updatedAt: DateTime!
 }

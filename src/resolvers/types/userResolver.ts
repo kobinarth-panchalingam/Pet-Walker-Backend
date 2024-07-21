@@ -1,4 +1,4 @@
-import { Resolvers } from '../../generated/graphql';
+import { Resolvers } from '../../schema/graphql-types';
 import { logger } from '../../utils/logger';
 
 export const userResolvers: Resolvers = {
@@ -28,7 +28,7 @@ export const userResolvers: Resolvers = {
     }
   },
   Mutation: {
-    updateUser: async( _, args, ctx ) => {
+    updateUser: async( _, args, ctx, info ) => {
       const { firstName, lastName, phoneNumber, dob, street, city, district, zipCode, profilePhoto, emergencyContacts } = args.input;
 
       let uniqueContacts = [];

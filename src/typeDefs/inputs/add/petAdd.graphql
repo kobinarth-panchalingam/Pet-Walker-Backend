@@ -1,6 +1,10 @@
 input PetAdd {
-    name: String!
-    breed: String!
-    userId: Int!
-    description: String
-  }
+  breedId: Int!
+  petDetails: PetDetailsAdd!
+  petType: PetType!
+  name: String!
+  dob: Date
+  photo: String
+  gender: Gender!
+  weight: Float! @constraint(exclusiveMin: 0)
+}

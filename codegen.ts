@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: "./src/typeDefs/**/*.graphql",
   generates: {
-    "src/generated/graphql.ts": {
+    "src/schema/graphql-types.ts": {
       plugins: ["typescript","typescript-resolvers"],
       config: {
         scalars: {
@@ -14,7 +14,7 @@ const config: CodegenConfig = {
         }
       }
     },
-    "src/generated/schema.graphql": {
+    "src/schema/schema.graphql": {
       plugins: ["schema-ast"],
     }
   },

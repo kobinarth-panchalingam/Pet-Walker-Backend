@@ -1,4 +1,3 @@
-
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils';
 import { defaultFieldResolver, GraphQLSchema } from 'graphql';
 

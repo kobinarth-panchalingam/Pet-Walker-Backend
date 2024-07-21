@@ -2,23 +2,26 @@ import { router as AuthRoutes } from './src/auth/auth';
 import { AUTH } from './src/constants/routes';
 import { Context, createApolloMiddleware } from './src/middlewares/apolloMiddleware';
 import { errorHandler, formatError } from './src/middlewares/errorHandler';
-import { resolvers } from './src/resolvers';
-import { schema } from './src/typeDefs';
+import { schema } from './src/schema';
 import { logger } from './src/utils/logger';
 
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import { addResolversToSchema } from '@graphql-tools/schema';
 import cors from 'cors';
 import express from 'express';
+import { createApollo4QueryValidationPlugin } from 'graphql-constraint-directive/apollo4';
 import http from 'http';
+
 const app = express();
 const httpServer = http.createServer( app );
 
 const server = new ApolloServer<Context>( {
-  schema: addResolversToSchema( { schema, resolvers } ),
+  schema,
   formatError,
-  plugins: [ ApolloServerPluginDrainHttpServer( { httpServer } ) ],
+  plugins: [
+    ApolloServerPluginDrainHttpServer( { httpServer } ),
+    createApollo4QueryValidationPlugin()
+  ],
   introspection: true,
   includeStacktraceInErrorResponses: false
 } );

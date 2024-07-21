@@ -1,2 +1,2 @@
-schema: './src/generated/schema.graphql'
+schema: './src/schema/schema.graphql'
 documents: './src/typeDefs/**/*.graphql'

@@ -1,4 +1,4 @@
-import { Resolvers } from '../../generated/graphql';
+import { Resolvers } from '../../schema/graphql-types';
 import { logger } from '../../utils/logger';
 
 export const petDetailsResolver: Resolvers = {

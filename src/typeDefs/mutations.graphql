@@ -1,4 +1,5 @@
 type Mutation {
-  addPet(input: PetAdd!): Pet
+  addPet(input: PetAdd!): MutationResponse
+  updatePet(input: PetUpdate!): MutationResponse
   updateUser(input: UserUpdate!): MutationResponse
 }

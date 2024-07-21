@@ -1,0 +1,11 @@
+  input PetUpdate {
+    id: Int!
+    breedId: Int 
+    petDetails: PetDetailsAdd
+    petType: PetType
+    name: String
+    dob: Date
+    photo: String
+    gender: Gender
+    weight: Float
+  }

@@ -21,12 +21,10 @@ export type Scalars = {
 
 export type Breed = {
   __typename?: 'Breed';
-  createdAt: Scalars['DateTime']['output'];
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   petType: PetType;
   pets: Array<Pet>;
-  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type EmergencyContact = {
@@ -53,13 +51,19 @@ export enum Gender {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPet?: Maybe<Pet>;
+  addPet?: Maybe<MutationResponse>;
+  updatePet?: Maybe<MutationResponse>;
   updateUser?: Maybe<MutationResponse>;
 };
 
 
 export type MutationAddPetArgs = {
   input: PetAdd;
+};
+
+
+export type MutationUpdatePetArgs = {
+  input: PetUpdate;
 };
 
 
@@ -94,10 +98,14 @@ export type Pet = {
 };
 
 export type PetAdd = {
-  breed: Scalars['String']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
+  breedId: Scalars['Int']['input'];
+  dob?: InputMaybe<Scalars['Date']['input']>;
+  gender: Gender;
   name: Scalars['String']['input'];
-  userId: Scalars['Int']['input'];
+  petDetails: PetDetailsAdd;
+  petType: PetType;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  weight: Scalars['Float']['input'];
 };
 
 export type PetDetails = {
@@ -118,16 +126,45 @@ export type PetDetails = {
   vaccinated: PetDetailsFormat;
 };
 
+export type PetDetailsAdd = {
+  behavioralTraits?: InputMaybe<PetDetailsInputFormat>;
+  dietaryRestrictions?: InputMaybe<PetDetailsInputFormat>;
+  energyLevel: PetDetailsInputFormat;
+  feedingSchedule: PetDetailsInputFormat;
+  pottyBreakSchedule: PetDetailsInputFormat;
+  preferredWalkingSchedule: Array<PetDetailsInputFormat>;
+  spayedNeutered: PetDetailsInputFormat;
+  specialRequirements?: InputMaybe<PetDetailsInputFormat>;
+  vaccinated: PetDetailsInputFormat;
+};
+
 export type PetDetailsFormat = {
   __typename?: 'PetDetailsFormat';
   additionalDetails?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
 };
 
+export type PetDetailsInputFormat = {
+  additionalDetails?: InputMaybe<Scalars['String']['input']>;
+  value: Scalars['String']['input'];
+};
+
 export enum PetType {
   Cat = 'CAT',
   Dog = 'DOG'
 }
+
+export type PetUpdate = {
+  breedId?: InputMaybe<Scalars['Int']['input']>;
+  dob?: InputMaybe<Scalars['Date']['input']>;
+  gender?: InputMaybe<Gender>;
+  id: Scalars['Int']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  petDetails?: InputMaybe<PetDetailsAdd>;
+  petType?: InputMaybe<PetType>;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['Float']['input']>;
+};
 
 export type Query = {
   __typename?: 'Query';
@@ -281,8 +318,11 @@ export type ResolversTypes = {
   Pet: ResolverTypeWrapper<Pet>;
   PetAdd: PetAdd;
   PetDetails: ResolverTypeWrapper<PetDetails>;
+  PetDetailsAdd: PetDetailsAdd;
   PetDetailsFormat: ResolverTypeWrapper<PetDetailsFormat>;
+  PetDetailsInputFormat: PetDetailsInputFormat;
   PetType: PetType;
+  PetUpdate: PetUpdate;
   Query: ResolverTypeWrapper<{}>;
   Role: Role;
   Status: Status;
@@ -309,7 +349,10 @@ export type ResolversParentTypes = {
   Pet: Pet;
   PetAdd: PetAdd;
   PetDetails: PetDetails;
+  PetDetailsAdd: PetDetailsAdd;
   PetDetailsFormat: PetDetailsFormat;
+  PetDetailsInputFormat: PetDetailsInputFormat;
+  PetUpdate: PetUpdate;
   Query: {};
   String: Scalars['String']['output'];
   User: User;
@@ -321,12 +364,10 @@ export type UppercaseDirectiveArgs = { };
 export type UppercaseDirectiveResolver<Result, Parent, ContextType = any, Args = UppercaseDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type BreedResolvers<ContextType = any, ParentType extends ResolversParentTypes['Breed'] = ResolversParentTypes['Breed']> = {
-  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   petType?: Resolver<ResolversTypes['PetType'], ParentType, ContextType>;
   pets?: Resolver<Array<ResolversTypes['Pet']>, ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -349,7 +390,8 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addPet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<MutationAddPetArgs, 'input'>>;
+  addPet?: Resolver<Maybe<ResolversTypes['MutationResponse']>, ParentType, ContextType, RequireFields<MutationAddPetArgs, 'input'>>;
+  updatePet?: Resolver<Maybe<ResolversTypes['MutationResponse']>, ParentType, ContextType, RequireFields<MutationUpdatePetArgs, 'input'>>;
   updateUser?: Resolver<Maybe<ResolversTypes['MutationResponse']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
 };
 

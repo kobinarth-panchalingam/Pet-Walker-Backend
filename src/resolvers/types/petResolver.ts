@@ -1,4 +1,5 @@
-import { Resolvers } from '../../generated/graphql';
+import { Resolvers } from '../../schema/graphql-types';
+import { validateNonNullableFields } from '../../utils/helpers';
 import { logger } from '../../utils/logger';
 
 export const petResolvers: Resolvers = {
@@ -37,12 +38,35 @@ export const petResolvers: Resolvers = {
     }
   },
   Mutation: {
-    addPet: ( _, args, ctx ) => {
-      return ctx.prisma.pet.create( { data: args.input } )
+    addPet: async( _, args, ctx ) => {
+      const { breedId, petType, name, dob, photo, gender, weight, petDetails } = args.input;
+
+      // Add pet to the database
+      const addedPet = await ctx.prisma.pet.create( { data: { userId: ctx.user.id, breedId, petType, name, dob, photo, gender, weight } } )
         .then( pet => {
           logger.info( `Successfully added pet id-${pet.id} name-${pet.name}` );
           return pet;
         } );
+
+      // Add pet details to the database
+      // TODO: Restrict enum values for petDetails. For now controlling it from user input
+      const addedPetDetails = await ctx.prisma.petDetails.create( { data: { petId: addedPet.id, ...petDetails } } )
+        .then( petDetails => {
+          logger.info( `Successfully added details of pet id-${addedPet.id} name-${addedPet.name}` );
+          return petDetails;
+        } );
+
+      return {
+        code: '200',
+        success: true,
+        message: 'Pet added successfully',
+        data: { ...addedPet, petDetails: addedPetDetails }
+      };
+    },
+    updatePet: async( _, args, ctx ) => {
+      const { id, breedId, petType, name, dob, photo, gender, weight, petDetails } = args.input;
+      validateNonNullableFields( { breedId, petType, gender, weight, dob } );
+      return null;
     }
   }
 };

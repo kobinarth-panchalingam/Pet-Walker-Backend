@@ -1,0 +1,16 @@
+input PetDetailsInputFormat {
+  value: String!
+  additionalDetails : String
+}
+
+input PetDetailsAdd {
+  spayedNeutered: PetDetailsInputFormat!
+  vaccinated: PetDetailsInputFormat!
+  energyLevel: PetDetailsInputFormat!
+  preferredWalkingSchedule: [PetDetailsInputFormat!]!
+  feedingSchedule: PetDetailsInputFormat!
+  pottyBreakSchedule: PetDetailsInputFormat!
+  specialRequirements: PetDetailsInputFormat
+  behavioralTraits: PetDetailsInputFormat
+  dietaryRestrictions: PetDetailsInputFormat
+}
