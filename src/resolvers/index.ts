@@ -1,4 +1,4 @@
-import { Resolvers } from '../generated/graphql';
+import { Resolvers } from '../schema/graphql-types';
 
 import { breedResolver } from './types/breedResolver';
 import { petDetailsResolver } from './types/petDetailsResolver';
@@ -10,7 +10,8 @@ import { DateResolver, DateTimeResolver, JSONResolver } from 'graphql-scalars';
 export const resolvers: Resolvers = {
   Query: {
     ...userResolvers.Query,
-    ...petResolvers.Query
+    ...petResolvers.Query,
+    ...breedResolver.Query
   },
   Mutation: {
     ...userResolvers.Mutation,

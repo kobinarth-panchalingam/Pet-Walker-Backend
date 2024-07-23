@@ -65,8 +65,9 @@ type Pet {
 }
 
 input PetAdd {
+  ageMonths: Int!
+  ageYears: Int!
   breedId: Int!
-  dob: Date
   gender: Gender!
   name: String!
   petDetails: PetDetailsAdd!
@@ -120,8 +121,9 @@ enum PetType {
 }
 
 input PetUpdate {
+  ageMonths: Int
+  ageYears: Int
   breedId: Int
-  dob: Date
   gender: Gender
   id: Int!
   name: String
@@ -132,6 +134,7 @@ input PetUpdate {
 }
 
 type Query {
+  getBreeds(petType: PetType): [Breed]
   getPets: [Pet]
   getUser: User
   getUsers: [User]

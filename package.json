@@ -10,7 +10,7 @@
     "dev": "npm run codegen && tsx watch --env-file=.env.development index.ts",
     "lint": "eslint **/*.ts",
     "codegen": "graphql-codegen --config codegen.ts",
-    "prisma": "dotenv -e .env.development -- npx prisma migrate dev"
+    "prisma": "dotenv -e .env.production -- npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/schema": "^10.0.4",
     "@prisma/client": "^5.17.0",
+    "apollo-server-core": "^3.13.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

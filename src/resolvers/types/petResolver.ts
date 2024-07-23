@@ -1,5 +1,5 @@
 import { Resolvers } from '../../schema/graphql-types';
-import { validateNonNullableFields } from '../../utils/helpers';
+import { getDateOfBirth, validateNonNullableFields } from '../../utils/helpers';
 import { logger } from '../../utils/logger';
 
 export const petResolvers: Resolvers = {
@@ -39,8 +39,8 @@ export const petResolvers: Resolvers = {
   },
   Mutation: {
     addPet: async( _, args, ctx ) => {
-      const { breedId, petType, name, dob, photo, gender, weight, petDetails } = args.input;
-
+      const { breedId, petType, name, ageYears, ageMonths, photo, gender, weight, petDetails } = args.input;
+      const dob = getDateOfBirth( ageYears, ageMonths );
       // Add pet to the database
       const addedPet = await ctx.prisma.pet.create( { data: { userId: ctx.user.id, breedId, petType, name, dob, photo, gender, weight } } )
         .then( pet => {
@@ -48,8 +48,8 @@ export const petResolvers: Resolvers = {
           return pet;
         } );
 
-      // Add pet details to the database
       // TODO: Restrict enum values for petDetails. For now controlling it from user input
+      // Add pet details to the database
       const addedPetDetails = await ctx.prisma.petDetails.create( { data: { petId: addedPet.id, ...petDetails } } )
         .then( petDetails => {
           logger.info( `Successfully added details of pet id-${addedPet.id} name-${addedPet.name}` );
@@ -64,9 +64,17 @@ export const petResolvers: Resolvers = {
       };
     },
     updatePet: async( _, args, ctx ) => {
-      const { id, breedId, petType, name, dob, photo, gender, weight, petDetails } = args.input;
+      const { id, breedId, petType, name, ageYears, ageMonths, photo, gender, weight, petDetails } = args.input;
+      const dob = getDateOfBirth( ageYears, ageMonths );
       validateNonNullableFields( { breedId, petType, gender, weight, dob } );
-      return null;
+      const updatedPet = await ctx.prisma.pet.update( { where: { id }, data: { breedId, petType, name, dob, photo, gender, weight } } );
+      const updatedPetDetails = await ctx.prisma.petDetails.update( { where: { petId: id }, data: petDetails } );
+      return {
+        code: '200',
+        success: true,
+        message: 'Pet updated successfully',
+        data: { ...updatedPet, petDetails: updatedPetDetails }
+      };
     }
   }
 };

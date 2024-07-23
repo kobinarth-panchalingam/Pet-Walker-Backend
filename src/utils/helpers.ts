@@ -8,4 +8,8 @@ const validateNonNullableFields = ( args:object ) => {
   }
 };
 
-export { validateNonNullableFields };
+const getDateOfBirth = ( ageYears:number, ageMonths:number ) => {
+  return new Date( new Date().setFullYear( new Date().getFullYear() - ageYears, new Date().getMonth() - ageMonths ) );
+};
+
+export { validateNonNullableFields, getDateOfBirth };

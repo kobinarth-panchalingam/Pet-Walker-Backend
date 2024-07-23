@@ -1,5 +1,6 @@
 type Query {
-  getUsers: [User]
+  getUsers: [User] # TODO: Need to remove
   getPets: [Pet]
   getUser: User
+  getBreeds(petType: PetType): [Breed]
 }

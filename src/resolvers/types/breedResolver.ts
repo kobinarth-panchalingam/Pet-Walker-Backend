@@ -10,5 +10,14 @@ export const breedResolver: Resolvers = {
           return pets;
         } );
     }
+  },
+  Query: {
+    getBreeds: ( _, args, ctx ) => {
+      return ctx.prisma.breed.findMany( { where: { petType: args.petType } } )
+        .then( breeds => {
+          logger.info( `Successfully fetched breeds of count ${breeds.length} for petType-${args.petType}` );
+          return breeds;
+        } );
+    }
   }
 };

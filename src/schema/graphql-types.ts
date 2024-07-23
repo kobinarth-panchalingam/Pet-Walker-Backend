@@ -98,8 +98,9 @@ export type Pet = {
 };
 
 export type PetAdd = {
+  ageMonths: Scalars['Int']['input'];
+  ageYears: Scalars['Int']['input'];
   breedId: Scalars['Int']['input'];
-  dob?: InputMaybe<Scalars['Date']['input']>;
   gender: Gender;
   name: Scalars['String']['input'];
   petDetails: PetDetailsAdd;
@@ -155,8 +156,9 @@ export enum PetType {
 }
 
 export type PetUpdate = {
+  ageMonths?: InputMaybe<Scalars['Int']['input']>;
+  ageYears?: InputMaybe<Scalars['Int']['input']>;
   breedId?: InputMaybe<Scalars['Int']['input']>;
-  dob?: InputMaybe<Scalars['Date']['input']>;
   gender?: InputMaybe<Gender>;
   id: Scalars['Int']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
@@ -168,9 +170,15 @@ export type PetUpdate = {
 
 export type Query = {
   __typename?: 'Query';
+  getBreeds?: Maybe<Array<Maybe<Breed>>>;
   getPets?: Maybe<Array<Maybe<Pet>>>;
   getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryGetBreedsArgs = {
+  petType?: InputMaybe<PetType>;
 };
 
 export enum Role {
@@ -446,6 +454,7 @@ export type PetDetailsFormatResolvers<ContextType = any, ParentType extends Reso
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getBreeds?: Resolver<Maybe<Array<Maybe<ResolversTypes['Breed']>>>, ParentType, ContextType, Partial<QueryGetBreedsArgs>>;
   getPets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Pet']>>>, ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;

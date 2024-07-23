@@ -4,7 +4,8 @@
     petDetails: PetDetailsAdd
     petType: PetType
     name: String
-    dob: Date
+    ageYears: Int
+    ageMonths: Int
     photo: String
     gender: Gender
     weight: Float
